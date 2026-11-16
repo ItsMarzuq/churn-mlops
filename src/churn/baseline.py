@@ -37,7 +37,7 @@ def fit_baseline(train: pd.DataFrame) -> Pipeline:
 
 
 def top_k_recall(y_true: np.ndarray, scores: np.ndarray, fraction: float = 0.2) -> float:
-    k = int(round(len(scores) * fraction))
+    k = round(len(scores) * fraction)
     top_idx = np.argsort(-scores)[:k]
     total_churners = y_true.sum()
     if total_churners == 0:

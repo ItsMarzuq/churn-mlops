@@ -24,7 +24,12 @@ schema = DataFrameSchema(
         "PaperlessBilling": Column(checks=Check.isin(YES_NO)),
         "PaymentMethod": Column(
             checks=Check.isin(
-                ["Electronic check", "Mailed check", "Bank transfer (automatic)", "Credit card (automatic)"]
+                [
+                    "Electronic check",
+                    "Mailed check",
+                    "Bank transfer (automatic)",
+                    "Credit card (automatic)",
+                ]
             )
         ),
         "MonthlyCharges": Column(float, checks=Check.in_range(0, 200)),

@@ -38,7 +38,7 @@ def test_zero_tenure_customers_get_zero_total_charges(cleaned):
 
 def test_split_is_stratified_and_deterministic(cleaned):
     train_a, test_a = split(cleaned)
-    train_b, test_b = split(cleaned)
+    _train_b, test_b = split(cleaned)
 
     assert list(test_a.index) == list(test_b.index)
     assert abs(test_a[TARGET].mean() - cleaned[TARGET].mean()) < 0.03

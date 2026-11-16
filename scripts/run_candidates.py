@@ -11,7 +11,7 @@ from mlflow import MlflowClient
 
 from churn.baseline import evaluate, fit_baseline
 from churn.data import SEED, TEST_SIZE, clean, load_raw, split
-from churn.models import LOGREG, MODEL_TYPE_TAG, XGBOOST, XGB_PARAMS, fit_xgboost
+from churn.models import LOGREG, MODEL_TYPE_TAG, XGB_PARAMS, XGBOOST, fit_xgboost
 from churn.schema import validate_raw
 
 RAW = Path("data/raw/telco.csv")

@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 from fastapi.testclient import TestClient
 
-import api.main as main
+from api import main
 from api.model_store import LoadedModel
 
 VALID_CUSTOMER = {

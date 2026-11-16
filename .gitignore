@@ -7,3 +7,6 @@ data/processed/
 mlflow.db
 mlruns/
 model/
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup

@@ -4,7 +4,15 @@ from pathlib import Path
 import mlflow
 
 from churn.baseline import evaluate, fit_baseline
-from churn.data import SEED, TARGET, TEST_SIZE, clean, load_raw, save_split_indices, split
+from churn.data import (
+    SEED,
+    TARGET,
+    TEST_SIZE,
+    clean,
+    load_raw,
+    save_split_indices,
+    split,
+)
 from churn.schema import validate_raw
 
 RAW = Path("data/raw/telco.csv")

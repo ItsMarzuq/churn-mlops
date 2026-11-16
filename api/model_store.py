@@ -48,7 +48,8 @@ def _load_from_registry(settings: Settings) -> LoadedModel:
         uri = f"models:/{settings.model_name}/{version}"
         stage = "pinned"
     else:
-        version = str(client.get_model_version_by_alias(settings.model_name, PRODUCTION_ALIAS).version)
+        alias_version = client.get_model_version_by_alias(settings.model_name, PRODUCTION_ALIAS)
+        version = str(alias_version.version)
         uri = f"models:/{settings.model_name}@{PRODUCTION_ALIAS}"
         stage = PRODUCTION_ALIAS
 

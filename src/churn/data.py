@@ -38,8 +38,9 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
 
     unexpected_nans = out["TotalCharges"].isna().sum()
     if unexpected_nans:
-        raise ValueError(f"{unexpected_nans} TotalCharges values are missing and not explained by zero tenure")
-
+        raise ValueError(
+            f"{unexpected_nans} TotalCharges values are missing and not explained by zero tenure"
+        )
     out[TARGET] = (out[TARGET] == "Yes").astype(int)
     out = out.drop(columns=[ID_COL])
     return out
