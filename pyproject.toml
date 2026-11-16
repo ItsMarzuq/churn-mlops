@@ -14,14 +14,17 @@ dependencies = [
     "xgboost",
     "mlflow",
     "dvc",
+    "pyyaml",
+    "fastapi",
+    "uvicorn",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest", "ruff", "mypy", "matplotlib", "jupyter"]
+dev = ["pytest", "ruff", "mypy", "matplotlib", "jupyter", "httpx"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 testpaths = ["tests"]

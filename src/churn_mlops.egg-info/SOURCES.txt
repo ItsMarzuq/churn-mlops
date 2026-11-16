@@ -1,11 +1,16 @@
 pyproject.toml
 src/churn/baseline.py
+src/churn/cv.py
 src/churn/data.py
+src/churn/models.py
+src/churn/promotion.py
 src/churn/schema.py
 src/churn_mlops.egg-info/PKG-INFO
 src/churn_mlops.egg-info/SOURCES.txt
 src/churn_mlops.egg-info/dependency_links.txt
 src/churn_mlops.egg-info/requires.txt
 src/churn_mlops.egg-info/top_level.txt
+tests/test_api.py
 tests/test_data.py
+tests/test_promotion.py
 tests/test_schema.py
