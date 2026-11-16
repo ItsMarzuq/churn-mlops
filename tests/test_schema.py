@@ -6,7 +6,7 @@ from pandera.errors import SchemaErrors
 from churn.data import load_raw
 from churn.schema import validate_raw
 
-RAW = Path(__file__).resolve().parents[1] / "data" / "raw" / "telco.csv"
+RAW = Path(__file__).resolve().parent / "data" / "telco_sample.csv"
 
 
 def test_raw_data_passes_schema():

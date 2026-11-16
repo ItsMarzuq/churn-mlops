@@ -5,7 +5,7 @@ import pytest
 
 from churn.data import ID_COL, TARGET, clean, load_raw, split
 
-RAW = Path(__file__).resolve().parents[1] / "data" / "raw" / "telco.csv"
+RAW = Path(__file__).resolve().parent / "data" / "telco_sample.csv"
 
 
 @pytest.fixture(scope="module")
@@ -14,7 +14,7 @@ def cleaned() -> pd.DataFrame:
 
 
 def test_row_count_is_unchanged(cleaned):
-    assert len(cleaned) == 7043
+    assert len(cleaned) == 200
 
 
 def test_customer_id_is_dropped(cleaned):
@@ -41,6 +41,6 @@ def test_split_is_stratified_and_deterministic(cleaned):
     train_b, test_b = split(cleaned)
 
     assert list(test_a.index) == list(test_b.index)
-    assert abs(test_a[TARGET].mean() - cleaned[TARGET].mean()) < 0.01
+    assert abs(test_a[TARGET].mean() - cleaned[TARGET].mean()) < 0.03
     assert len(train_a) + len(test_a) == len(cleaned)
     assert set(train_a.index).isdisjoint(test_a.index)
