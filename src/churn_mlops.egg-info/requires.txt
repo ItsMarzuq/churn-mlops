@@ -1,0 +1,13 @@
+pandas
+scikit-learn
+pandera
+xgboost
+mlflow
+dvc
+
+[dev]
+pytest
+ruff
+mypy
+matplotlib
+jupyter
