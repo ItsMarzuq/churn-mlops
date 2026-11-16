@@ -3,7 +3,7 @@
 import sqlite3
 from datetime import datetime, timedelta, timezone
 
-from api.prediction_log import PredictionLog
+from churn.prediction_log import PredictionLog
 
 
 def test_record_and_read_back(tmp_path):

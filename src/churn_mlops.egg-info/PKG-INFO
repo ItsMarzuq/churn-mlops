@@ -3,7 +3,7 @@ Name: churn-mlops
 Version: 0.1.0
 Summary: End-to-end MLOps pipeline for customer churn prediction
 Requires-Python: >=3.10
-Requires-Dist: pandas
+Requires-Dist: pandas<3,>=2.2
 Requires-Dist: scikit-learn
 Requires-Dist: pandera
 Requires-Dist: xgboost
@@ -12,6 +12,7 @@ Requires-Dist: dvc
 Requires-Dist: pyyaml
 Requires-Dist: fastapi
 Requires-Dist: uvicorn
+Requires-Dist: evidently
 Provides-Extra: dev
 Requires-Dist: pytest; extra == "dev"
 Requires-Dist: ruff; extra == "dev"

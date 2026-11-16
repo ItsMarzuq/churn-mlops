@@ -11,13 +11,13 @@ from fastapi import FastAPI, HTTPException
 
 from api.config import load_settings
 from api.model_store import load_model
-from api.prediction_log import PredictionLog
 from api.schemas import (
     CustomerFeatures,
     HealthResponse,
     ModelInfoResponse,
     PredictionResponse,
 )
+from churn.prediction_log import PredictionLog
 
 state: dict = {}
 
