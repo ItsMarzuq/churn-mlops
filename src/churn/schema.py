@@ -1,4 +1,4 @@
-from pandera import Check, Column, DataFrameSchema
+from pandera.pandas import Check, Column, DataFrameSchema
 
 YES_NO = ["Yes", "No"]
 INTERNET_ADDON = ["Yes", "No", "No internet service"]
