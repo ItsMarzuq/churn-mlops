@@ -1,0 +1,8 @@
+# All tunable settings for the pipeline. DVC tracks changes to these values.
+test_size: 0.2
+xgboost:
+  n_estimators: 300
+  max_depth: 4
+  learning_rate: 0.05
+  subsample: 0.8
+  colsample_bytree: 0.8

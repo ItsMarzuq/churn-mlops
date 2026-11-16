@@ -1,3 +1,8 @@
+"""Load, clean, and split the Telco churn dataset.
+
+Pipeline order: load_raw -> validate -> clean -> split.
+"""
+
 from __future__ import annotations
 
 import json
@@ -13,10 +18,18 @@ SEED = 42
 
 
 def load_raw(path: str | Path) -> pd.DataFrame:
+    """Read the raw CSV exactly as it is. No cleaning happens here."""
     return pd.read_csv(path)
 
 
 def clean(df: pd.DataFrame) -> pd.DataFrame:
+    """Return a cleaned copy of the raw data.
+
+    - TotalCharges is text in the CSV; blanks become NaN, then zero-tenure
+      customers (never billed yet) get 0.0.
+    - Churn becomes 1/0.
+    - The customer ID is dropped so it cannot be used as a feature.
+    """
     out = df.copy()
 
     out["TotalCharges"] = pd.to_numeric(out["TotalCharges"].str.strip(), errors="coerce")
@@ -32,10 +45,14 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def split(df: pd.DataFrame, test_size: float = TEST_SIZE) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Stratified train/test split with a fixed seed.
+
+    Stratifying keeps the churn rate the same in both halves.
+    """
     train, test = train_test_split(
         df,
-        test_size=TEST_SIZE,
+        test_size=test_size,
         stratify=df[TARGET],
         random_state=SEED,
     )
@@ -43,9 +60,10 @@ def split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 
 def save_split_indices(train: pd.DataFrame, test: pd.DataFrame, path: str | Path) -> None:
+    """Record which rows went to each side, so the split can be reproduced and audited."""
     payload = {
         "seed": SEED,
-        "test_size": TEST_SIZE,
+        "test_fraction": round(len(test) / (len(train) + len(test)), 4),
         "train_rows": [int(i) for i in train.index],
         "test_rows": [int(i) for i in test.index],
     }

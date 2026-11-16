@@ -1,0 +1,28 @@
+stages:
+  prepare:
+    cmd: python scripts/prepare.py
+    deps:
+      - scripts/prepare.py
+      - src/churn/data.py
+      - src/churn/schema.py
+      - data/raw/telco.csv
+    params:
+      - test_size
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
+      - data/processed/split.json
+
+  train:
+    cmd: python scripts/train.py
+    deps:
+      - scripts/train.py
+      - src/churn/baseline.py
+      - src/churn/models.py
+      - data/processed/train.csv
+      - data/processed/test.csv
+    params:
+      - xgboost
+    metrics:
+      - metrics/metrics.json:
+          cache: false

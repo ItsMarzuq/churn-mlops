@@ -1,0 +1,73 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python scripts/prepare.py
+    deps:
+    - path: data/raw/telco.csv
+      hash: md5
+      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
+      size: 977501
+    - path: scripts/prepare.py
+      hash: md5
+      md5: 6f9321f2802f80ff0a15030080227d25
+      size: 770
+    - path: src/churn/data.py
+      hash: md5
+      md5: 24d00788716a900cbb0120a9b86fafeb
+      size: 2209
+    - path: src/churn/schema.py
+      hash: md5
+      md5: baace9b0dbed461a84acfd2efeddcce1
+      size: 1818
+    params:
+      params.yaml:
+        test_size: 0.2
+    outs:
+    - path: data/processed/split.json
+      hash: md5
+      md5: a4149b20dbccc65a8d69e232110155d2
+      size: 41216
+    - path: data/processed/test.csv
+      hash: md5
+      md5: b182d78d000932a3a62e177c251d8b18
+      size: 184374
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 192f17eef480a4b6f0b7757f95fa61be
+      size: 735497
+  train:
+    cmd: python scripts/train.py
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: b182d78d000932a3a62e177c251d8b18
+      size: 184374
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 192f17eef480a4b6f0b7757f95fa61be
+      size: 735497
+    - path: scripts/train.py
+      hash: md5
+      md5: a0a2382f8edbfeba46f5897d7a18dc8c
+      size: 976
+    - path: src/churn/baseline.py
+      hash: md5
+      md5: 41b4abc86335cb5d96859beee6d2aa7c
+      size: 1852
+    - path: src/churn/models.py
+      hash: md5
+      md5: 01e2293a743466fcc0246457860829ef
+      size: 1662
+    params:
+      params.yaml:
+        xgboost:
+          n_estimators: 300
+          max_depth: 4
+          learning_rate: 0.05
+          subsample: 0.8
+          colsample_bytree: 0.8
+    outs:
+    - path: metrics/metrics.json
+      hash: md5
+      md5: 2bbadb479454da86c6ca172e47d960cd
+      size: 277

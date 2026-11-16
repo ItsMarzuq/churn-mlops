@@ -1,3 +1,5 @@
+"""Model definitions for M2 and M3. Candidates share one preprocessing recipe."""
+
 from __future__ import annotations
 
 import pandas as pd
@@ -9,6 +11,7 @@ from xgboost import XGBClassifier
 from churn.baseline import fit_baseline, split_features
 from churn.data import SEED
 
+# Default XGBoost settings. The DVC pipeline passes values from params.yaml instead.
 XGB_PARAMS = {
     "n_estimators": 300,
     "max_depth": 4,
@@ -17,8 +20,13 @@ XGB_PARAMS = {
     "colsample_bytree": 0.8,
 }
 
+LOGREG = "logistic_regression"
+XGBOOST = "xgboost"
+MODEL_TYPE_TAG = "model_type"
+
 
 def make_preprocessor(X: pd.DataFrame) -> ColumnTransformer:
+    """Scale numeric columns and one-hot encode text columns."""
     categorical = list(X.select_dtypes(exclude="number").columns)
     numeric = list(X.select_dtypes(include="number").columns)
     return ColumnTransformer(
@@ -29,18 +37,18 @@ def make_preprocessor(X: pd.DataFrame) -> ColumnTransformer:
     )
 
 
-def fit_xgboost(train: pd.DataFrame) -> Pipeline:
+def fit_xgboost(train: pd.DataFrame, xgb_params: dict | None = None) -> Pipeline:
+    """Fit the XGBoost candidate on the training split."""
+    params = xgb_params or XGB_PARAMS
     X, y = split_features(train)
     model = Pipeline(
         [
             ("preprocess", make_preprocessor(X)),
-            ("model", XGBClassifier(**XGB_PARAMS, random_state=SEED, eval_metric="logloss")),
+            ("model", XGBClassifier(**params, random_state=SEED, eval_metric="logloss")),
         ]
     )
     model.fit(X, y)
     return model
 
-LOGREG = "logistic_regression"
-XGBOOST = "xgboost"
-MODEL_TYPE_TAG = "model_type"
+
 FIT_FUNCTIONS = {LOGREG: fit_baseline, XGBOOST: fit_xgboost}
