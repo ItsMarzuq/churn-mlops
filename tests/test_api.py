@@ -37,7 +37,7 @@ class FakePipeline:
 
 
 @pytest.fixture
-def client(monkeypatch):
+def client(monkeypatch, tmp_path):
     def fake_load(settings):
         return LoadedModel(
             pipeline=FakePipeline(),
@@ -47,6 +47,7 @@ def client(monkeypatch):
         )
 
     monkeypatch.setattr(main, "load_model", fake_load)
+    monkeypatch.setenv("PREDICTION_LOG_PATH", str(tmp_path / "predictions.db"))
     with TestClient(main.app) as c:
         yield c
 
